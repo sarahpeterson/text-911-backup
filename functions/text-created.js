@@ -28,9 +28,23 @@ exports.handler = function(event, context, callback) {
           body: msg.body
         }).then((res) => {
           console.log(res);
+          return callback(null, {
+            statusCode: 200,
+            body: JSON.stringify({
+              message: 'Text message successfully sent!',
+              data: res,
+            })
+          })
         })
         .catch(err => {
           console.log(err);
+          return callback(null, {
+            statusCode: error.status,
+            body: JSON.stringify({
+              message: error.message,
+              error: error,
+            })
+          })
         });
 
 
