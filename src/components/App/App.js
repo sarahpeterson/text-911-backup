@@ -63,33 +63,19 @@ class App extends Component {
     if (medical && !police && !fire) return 'Medical';
     if (police && !fire && !medical) return 'Police';
   }
-  // handleSubmit = e => {
-  //     fetch("/", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //       body: encode({ "form-name": "contact", ...this.state })
-  //     })
-  //       .then(() => alert("Success!"))
-  //       .catch(error => alert(error));
-  //
-  //     e.preventDefault();
-  //   };
+
   onSuccess(medical, police, fire) {
     const { long, lat, address } = this.state;
     this.setState({body: `${this.type(medical, police, fire)} emergency at ${long}, ${lat} or ${address}. Person may be deaf or unable to speak out loud.` })
     console.log(this.state.body)
     this.setState({ complete: true });
-    const IS_PRODUCTION = !/127\.0\.0\.1/.test(window.location);
-        const SUBMISSION_URL = IS_PRODUCTION
-          ? '/'
-          : 'http://127.0.0.1:9000/text-created';
     if (this.state.complete) {
-      return fetch(SUBMISSION_URL,
+      return fetch('/api/messages/',
       {
         method: 'POST',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(
           {
@@ -98,9 +84,15 @@ class App extends Component {
           },
         ),
       })
-      .then(() => alert("Success!"))
-      .catch(error => alert(error));
-
+      .then((response) => {
+        console.log(response)
+        if (response.status === 200) {
+          console.log('success');
+          this.setState({ success: true });
+        } else {
+          console.log('else')
+        }
+      })
     }
   }
 
@@ -150,14 +142,12 @@ class App extends Component {
           data={this.state}
           onToggleOpen={this.onToggleOpen}
           filterPlaces={this.filterPlaces}
-          success={(medical, police, fire) => {
+          onSuccess={(medical, police, fire) => {
             console.log(medical, police, fire)
-            // this.onSuccess(medical, police, fire);
+            this.onSuccess(medical, police, fire);
           }}
         />
-        <form name="contact" class="form" method="POST" data-netlify="true">
-          <button onClick={() => this.onSuccess()} style={{ position: 'absolute', bottom: 30 }} className="btn" type="submit">Click to Contact 911</button>
-        </form>
+
       </div>
     );
   }
@@ -177,7 +167,6 @@ class App extends Component {
           {this.maybeModal()}
         </div>
         {this.maybeFilter()}
-
       </div>
     );
   }
