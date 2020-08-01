@@ -1,0 +1,40 @@
+.map {
+  height: 280px;
+  width: 100%;
+}
+
+@media (max-width: 1179px) {
+  .map {
+    width: 100%;
+  }
+}
+
+@media (max-width: 679px) {
+  .map {
+    width: 100%;
+    height: 280px;
+  }
+}
+#coordinates {
+  position: absolute;
+  color: white;
+  margin: 10px;
+}
+
+.map-button {
+  border-top: 1px solid grey;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  width: 100%;
+}
+
+.coordinates {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: #fff;
+  width: 50%;
+  text-wrap: wrap;
+  word-wrap: break-word;
+}

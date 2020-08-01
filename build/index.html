@@ -1,0 +1,197 @@
+Html Webpack Plugin:
+<pre>
+  Error: Parse Error: <button
+              onClick={() => {
+                setMedical(true);
+                setPolice(false);
+                setFire(false);
+              }}
+              tabIndex="0"
+              className="result-item"
+            >
+              <img
+                src={RedCross}
+                alt="red cross"
+                className="icon"
+                title="Red Cross Icon"
+              />
+              <p>Medical</p>
+              <input
+                type="checkbox"
+                className="form-check-input"
+              />
+            </button>
+            <button
+              onClick={() => {
+                setMedical(false);
+                setPolice(true);
+                setFire(false);
+              }}
+              tabIndex="1"
+              className="result-item"
+            >
+              <img
+                src={PoliceCar}
+                alt="policecar"
+                className="icon"
+                title="Police Car Icon"
+              />
+                <p>Police</p>
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                />
+            </button>
+            <button
+              onClick={() => {
+                setMedical(false);
+                setPolice(false);
+                setFire(true);
+              }}
+              tabIndex="2"
+              className="result-item"
+            >
+              <img
+                src={Fire}
+                alt="fire"
+                className="icon"
+                title="Fire Icon"
+              />
+              <p>Fire</p>
+              <input
+                type="checkbox"
+                className="form-check-input"
+              />
+            </button>
+          </ul>
+        </div>
+        <button className="btn" type="submit" onClick={props.onSuccess}>Click to   Contact 911</button>
+        </form>
+      <div id="root"></div>
+      <!-- <script>
+      const form = document.querySelector('form');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    // disable button to prevent multiple submissions
+    // make the request to submit the form
+    try {
+      const response = await fetch('/', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        // parse and submit all included form data
+        body: new URLSearchParams(new FormData(form)).toString()
+      });
+      // if it was successful show success message
+      if (response.status === 200) {
+        console.log('success')
+      } else {
+        console.log('error')
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  });
+  </script> -->
+      <script type="text/babel">
+        ReactDOM.render(
+          <form name="contact" className="form" netlify-honeypot="bot-field" met  hod="POST" netlify="true">
+            <h2 className="filter-title" tabIndex="0">
+              Emergency Help Needed?
+            </h2>
+            <div className="results">
+              <ul className="results-list" tabIndex="0">
+                <button
+                  onClick={() => {
+                    setMedical(true);
+                    setPolice(false);
+                    setFire(false);
+                  }}
+                  tabIndex="0"
+                  className="result-item"
+                >
+                  <img
+                    src={RedCross}
+                    alt="red cross"
+                    className="icon"
+                    title="Red Cross Icon"
+                  />
+                  <p>Medical</p>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                  />
+                </button>
+                <button
+                  onClick={() => {
+                    setMedical(false);
+                    setPolice(true);
+                    setFire(false);
+                  }}
+                  tabIndex="1"
+                  className="result-item"
+                >
+                  <img
+                    src={PoliceCar}
+                    alt="policecar"
+                    className="icon"
+                    title="Police Car Icon"
+                  />
+                    <p>Police</p>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                    />
+                </button>
+                <button
+                  onClick={() => {
+                    setMedical(false);
+                    setPolice(false);
+                    setFire(true);
+                  }}
+                  tabIndex="2"
+                  className="result-item"
+                >
+                  <img
+                    src={Fire}
+                    alt="fire"
+                    className="icon"
+                    title="Fire Icon"
+                  />
+                  <p>Fire</p>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                  />
+                </button>
+              </ul>
+            </div>
+            <button className="btn" type="submit" onClick={props.onSuccess}>Clic  k to Contact 911</button>
+            </form>,
+          document.getElementById("form")
+        );
+      </script>
+    <script>!function(e){function t(t){for(var n,l,f=t[0],i=t[1],a=t[2],c=0,s=[]  ;c<f.length;c++)l=f[c],Object.prototype.hasOwnProperty.call(o,l)&&o[l]&&s.push  (o[l][0]),o[l]=0;for(n in i)Object.prototype.hasOwnProperty.call(i,n)&&(e[n]=i  [n]);for(p&&p(t);s.length;)s.shift()();return u.push.apply(u,a||[]),r()}functi  on r(){for(var e,t=0;t<u.length;t++){for(var r=u[t],n=!0,f=1;f<r.length;f++){v  ar i=r[f];0!==o[i]&&(n=!1)}n&&(u.splice(t--,1),e=l(l.s=r[0]))}return e}var n={  },o={1:0},u=[];function l(t){if(n[t])return n[t].exports;var r=n[t]={i:t,l:!1,  exports:{}};return e[t].call(r.exports,r,r.exports,l),r.l=!0,r.exports}l.m=e,l  .c=n,l.d=function(e,t,r){l.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,ge  t:r})},l.r=function(e){"undefined"!==typeof Symbol&&Symbol.toStringTag&&Object  .defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e  ,"__esModule",{value:!0})},l.t=function(e,t){if(1&t&&(e=l(e)),8&t)return e;if(  4&t&&"object"===typeof e&&e&&e.__esModule)return e;var r=Object.create(null);i  f(l.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"stri  ng"!=typeof e)for(var n in e)l.d(r,n,function(t){return e[t]}.bind(null,n));re  turn r},l.n=function(e){var t=e&&e.__esModule?function(){return e.default}:fun  ction(){return e};return l.d(t,"a",t),t},l.o=function(e,t){return Object.proto  type.hasOwnProperty.call(e,t)},l.p="/";var f=this.webpackJsonptext911=this.web  packJsonptext911||[],i=f.push.bind(f);f.push=t,f=f.slice();for(var a=0;a<f.len  gth;a++)t(f[a]);var p=i;r()}([]);
+  //# sourceMappingURL=runtime-main.d88ff42e.js.map</script><script src="/static  /js/2.e5efe413.chunk.js"></script><script src="/static/js/main.0ff2e6b7.chunk.  js"></script></body>
+  </html>
+  
+  - htmlparser.js:244 new HTMLParser
+    [lib]/[react-scripts]/[html-minifier-terser]/src/htmlparser.js:244:13
+  
+  - htmlminifier.js:993 minify
+    [lib]/[react-scripts]/[html-minifier-terser]/src/htmlminifier.js:993:3
+  
+  - htmlminifier.js:1354 Object.exports.minify
+    [lib]/[react-scripts]/[html-minifier-terser]/src/htmlminifier.js:1354:16
+  
+  - index.js:445 HtmlWebpackPlugin.postProcessHtml
+    [lib]/[react-scripts]/[html-webpack-plugin]/index.js:445:41
+  
+  - index.js:274 
+    [lib]/[react-scripts]/[html-webpack-plugin]/index.js:274:25
+  
+  - task_queues.js:97 processTicksAndRejections
+    internal/process/task_queues.js:97:5
+  
+</pre>
