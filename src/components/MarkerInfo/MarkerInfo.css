@@ -1,0 +1,71 @@
+.details-place {
+  display: flex;
+  flex-flow: row wrap;
+  height: 150px;
+}
+
+.details-title {
+  font-size: 22px;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 1px solid #26323886;
+  padding-bottom: 0.2em;
+  margin: 0;
+}
+
+.details-title a {
+  text-decoration: none;
+  color: #263238;
+  transition: all 0.4s ease-in-out;
+}
+
+.details-title:hover a,
+.details-title:focus a {
+  color: #f94878;
+}
+
+.details-address {
+  width: 65%;
+  align-self: center;
+  color: #263238;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 14px;
+}
+
+.details-category {
+  width: 100%;
+  font-size: 16px;
+  text-transform: lowercase;
+  color: #263238;
+  margin-bottom: 0.5em;
+}
+
+.category-pill {
+  font-size: 14px;
+  display: inline-block;
+  color: #0366d6;
+  background-color: #d9edff;
+  margin: 0 0 2px 2px;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.details-more {
+  width: 10%;
+  align-self: flex-end;
+  text-align: right;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: all 0.4s ease-in-out;
+}
+
+.details-more:hover,
+.details-more:focus {
+  opacity: 1;
+}
+
+.details-more img {
+  height: 20px;
+}
