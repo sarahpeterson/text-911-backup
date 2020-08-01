@@ -70,7 +70,7 @@ class App extends Component {
     console.log(this.state.body)
     this.setState({ complete: true });
     if (this.state.complete) {
-      return fetch('/api/messages/',
+      return fetch('/.netlify/functions/text-created',
       {
         method: 'POST',
         mode: 'cors',
@@ -95,6 +95,29 @@ class App extends Component {
       })
     }
   }
+
+//   function createTodo(data) {
+//   return fetch('/.netlify/functions/todos-create', {
+//     body: JSON.stringify(data),
+//     method: 'POST'
+//   }).then(response => {
+//     return response.json()
+//   })
+// }
+//
+// // Todo data
+// const myTodo = {
+//   title: 'My todo title',
+//   completed: false,
+// }
+//
+// // create it!
+// createTodo(myTodo).then((response) => {
+//   console.log('API response', response)
+//   // set app state
+// }).catch((error) => {
+//   console.log('API error', error)
+// })
 
   maybeModal() {
     const { emergency } = this.state;

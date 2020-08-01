@@ -10,6 +10,7 @@
     "escape-string-regexp": "^1.0.5",
     "express": "^4.17.1",
     "express-pino-logger": "^5.0.0",
+    "http-proxy-middleware": "^1.0.5",
     "mapbox-gl": "^1.11.1",
     "netlify-lambda": "^2.0.1",
     "prop-types": "^15.6.2",
