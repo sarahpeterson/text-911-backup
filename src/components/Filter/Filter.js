@@ -11,7 +11,6 @@ const Filter = (props) => {
   const [medical, setMedical] = useState(false);
   const [police, setPolice] = useState(false);
   const [fire, setFire] = useState(false);
-  props.success(medical, police, fire)
   return (
     <div className="filter">
       <h2 className="filter-title" tabIndex="0">
@@ -87,6 +86,7 @@ const Filter = (props) => {
           </button>
         </ul>
       </div>
+      <SwipeableButton onSuccess={props.onSuccess} color='red' text='Slide to Contact 911' />
     </div>
   );
 };
