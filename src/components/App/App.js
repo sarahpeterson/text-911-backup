@@ -68,8 +68,6 @@ class App extends Component {
     const { long, lat, address } = this.state;
     this.setState({body: `${this.type(medical, police, fire)} emergency at ${long}, ${lat} or ${address}. Person may be deaf or unable to speak out loud.` })
     console.log(this.state.body)
-    this.setState({ complete: true });
-    if (this.state.complete) {
       return fetch('/.netlify/functions/text-created',
       {
         method: 'POST',
@@ -92,8 +90,9 @@ class App extends Component {
         } else {
           console.log('else')
         }
+      }).catch((error) => {
+        console.log(error)
       })
-    }
   }
 
 //   function createTodo(data) {
