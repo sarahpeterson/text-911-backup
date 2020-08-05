@@ -16,11 +16,6 @@ import './App.css';
 
 const TOKEN = 'pk.eyJ1IjoiZ2FiYnlnYWJieSIsImEiOiJjazZsYzgwaDEwMmFhM2hwaG1nMWZvcnpzIn0.Fw8Z5U4PoaEIQACGzQ2mYA';
 
-// figure out undefined values at first
-// delete unused stuff
-// fix button
-// move to gabbys repo
-
 class App extends Component {
   constructor(props) {
     super(props);

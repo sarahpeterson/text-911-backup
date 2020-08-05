@@ -27,7 +27,7 @@ const buttons = (props, modal, setModal) => {
           />
         </button>
       );
-    } if (b === 'Crime') {
+    } if (b === 'Crisis Intervention') {
       return (
         <button
           onClick={() => {
@@ -41,7 +41,7 @@ const buttons = (props, modal, setModal) => {
             className="icon"
           />
           <p className="emergency-btn-text">
-            Crime
+            Crisis Intervention
           </p>
           <input
             checked={props.iconChecked === b}
@@ -87,6 +87,140 @@ const buttons = (props, modal, setModal) => {
           />
           <p className="emergency-btn-text">
             Bus/Train?
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Domestic Violence') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <img
+            src={ require(`../../assets/imgs/Harassment.png`) }
+            className="icon"
+          />
+          <p className="emergency-btn-text">
+            Domestic Violence
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Bleeding') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <img
+            src={ require(`../../assets/imgs/first-aid-kit.png`) }
+            className="icon"
+          />
+          <p className="emergency-btn-text">
+            Bleeding
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Car Accident') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <img
+            src={ require(`../../assets/imgs/Accident.png`) }
+            className="icon"
+          />
+          <p className="emergency-btn-text">
+            Car Accident
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Home Invasion/Theft') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <img
+            src={ require(`../../assets/imgs/Robbery.png`) }
+            className="icon"
+          />
+          <p className="emergency-btn-text">
+            Home Invasion/Theft
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Shooting') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <img
+            src={ require(`../../assets/imgs/Shooting.png`) }
+            className="icon"
+          />
+          <p className="emergency-btn-text">
+            Shooting
+          </p>
+          <input
+            checked={props.iconChecked === b}
+            type="checkbox"
+            className="checkbox"
+          />
+        </button>
+      );
+    } if (b === 'Trouble Breathing') {
+      return (
+        <button
+          onClick={() => {
+            props.setIcon(b);
+            setModal(b);
+          }}
+          className="emergency-btn"
+        >
+          <p className="emergency-btn-text">
+            Trouble Breathing
           </p>
           <input
             checked={props.iconChecked === b}
