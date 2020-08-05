@@ -128,11 +128,13 @@ const Details = (props) => {
         show={emergency}
         buttons={[
           'Unconscious',
-          'Crime',
-          'Harassment',
-          'Accident',
+          'Domestic Violence',
+          'Crisis Intervention',
+          'Bleeding',
+          'Car Accident',
+          'Home Invasion/Theft',
           'Shooting',
-          'Robbery'
+          'Trouble Breathing'
         ]}
         title="Specific Emergency?"
         setIcon={(b) => {

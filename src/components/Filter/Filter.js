@@ -21,8 +21,8 @@ const Filter = (props) => {
           <button
             onClick={() => {
               setMedical(true);
-              setPolice(false);
-              setFire(false);
+              // setPolice(false);
+              // setFire(false);
             }}
             tabIndex="0"
             className="result-item"
@@ -42,9 +42,9 @@ const Filter = (props) => {
           </button>
           <button
             onClick={() => {
-              setMedical(false);
+              // setMedical(false);
               setPolice(true);
-              setFire(false);
+              // setFire(false);
             }}
             tabIndex="1"
             className="result-item"
@@ -64,8 +64,8 @@ const Filter = (props) => {
           </button>
           <button
             onClick={() => {
-              setMedical(false);
-              setPolice(false);
+              // setMedical(false);
+              // setPolice(false);
               setFire(true);
             }}
             tabIndex="2"
@@ -86,7 +86,7 @@ const Filter = (props) => {
           </button>
         </ul>
       </div>
-      <SwipeableButton onSuccess={props.onSuccess} color='red' text='Slide to Contact 911' />
+      <SwipeableButton onSuccess={() => props.onSuccess(medical, police, fire)} color='red' text='Slide to Contact 911' />
     </div>
   );
 };
