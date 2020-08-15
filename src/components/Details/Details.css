@@ -93,7 +93,7 @@
   font-size: 20px;
   padding: 5px;
 }
-.modal-container {
+.detail-modal-container {
   background-color: rgba(200,200,200,0.75);
   position: absolute;
   bottom: 0;

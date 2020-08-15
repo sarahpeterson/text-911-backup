@@ -43,7 +43,7 @@
   color: cornflowerblue;
   font-size: 15px;
 }
-.modalContainer {
+.modal-container {
   position: absolute;
   background-color: grey;
   height: 100vh;

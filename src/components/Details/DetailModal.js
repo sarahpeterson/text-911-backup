@@ -273,7 +273,7 @@ const DetailModal = (props) => {
       {
         modal !== '' && props.location ? <div className="location-blur" /> : null
       }
-      <div className="modal-container">
+      <div className="detail-modal-container">
         <div className="modal-wrapper">
           <div className="modal-btn-container">
             <div className="modal-btn-text-container">
