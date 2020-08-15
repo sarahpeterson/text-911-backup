@@ -31,7 +31,8 @@ class App extends Component {
       body: '',
       long: 0,
       lat: 0,
-      address: ''
+      address: '',
+      error: ''
     };
   }
 
@@ -68,8 +69,8 @@ class App extends Component {
     const { long, lat, address } = this.state;
     this.setState({body: `${this.type(medical, police, fire)} emergency at ${long}, ${lat} or ${address}. Person may be deaf or unable to speak out loud.` })
     console.log(this.state.body)
-      return fetch('/.netlify/functions/text-created',
-      {
+    // this.setState({ success: true });
+      return fetch('/.netlify/functions/text-created', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -77,10 +78,10 @@ class App extends Component {
         },
         body: JSON.stringify(
           {
-            to: +4156345171,
             body: this.state.body
           },
         ),
+
       })
       .then((response) => {
         console.log(response)
@@ -89,37 +90,15 @@ class App extends Component {
           this.setState({ success: true });
         } else {
           console.log('else')
+          this.setState({ modal: true, status: 'error' });
         }
       }).catch((error) => {
         console.log(error)
       })
   }
 
-//   function createTodo(data) {
-//   return fetch('/.netlify/functions/todos-create', {
-//     body: JSON.stringify(data),
-//     method: 'POST'
-//   }).then(response => {
-//     return response.json()
-//   })
-// }
-//
-// // Todo data
-// const myTodo = {
-//   title: 'My todo title',
-//   completed: false,
-// }
-//
-// // create it!
-// createTodo(myTodo).then((response) => {
-//   console.log('API response', response)
-//   // set app state
-// }).catch((error) => {
-//   console.log('API error', error)
-// })
-
   maybeModal() {
-    const { emergency } = this.state;
+    const { emergency, modal, status } = this.state;
     const { terms } = this.props;
     if (!terms) {
       return (
@@ -142,6 +121,15 @@ class App extends Component {
           btnClick={() => this.setState({ emergency: false })}
         />
       );
+    } if (modal && status === 'error') {
+      return (
+        <Modal
+          header="There was an error sending your message"
+          para=""
+          btnTxt="Ok"
+          btnClick={() => this.setState({ modal: false })}
+        />
+      )
     }
   }
 
@@ -152,9 +140,13 @@ class App extends Component {
   }
 
   maybeFilter() {
+    const { long, lat, address } = this.state;
     return (
       <div>
         <Map
+          long={long}
+          lat={lat}
+          address={address}
           setCoords={(long, lat, address) => {
             console.log('coords', long, lat, address)
             this.setState({ long, lat, address });
@@ -169,7 +161,6 @@ class App extends Component {
             this.onSuccess(medical, police, fire);
           }}
         />
-
       </div>
     );
   }
@@ -182,7 +173,7 @@ class App extends Component {
       <div className="app">
         {
           !terms || emergency ?
-          <div className="modalContainer" /> :
+          <div className="modal-container" /> :
           null
         }
         <div className="content">
