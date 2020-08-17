@@ -40,7 +40,7 @@ exports.handler = function(event, context, callback) {
   client.calls
     .create({
        twiml: `<Response><Say>${msg.body}</Say></Response>`,
-       to: '+14129135895',
+       to: '+15103294382',
        from: TWILIO_PHONE_NUMBER,
      }).then((res) => {
        console.log(res);
