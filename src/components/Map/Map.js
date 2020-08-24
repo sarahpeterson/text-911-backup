@@ -4,6 +4,13 @@ import mapboxgl, { GeolocateControl } from 'mapbox-gl';
 import Filter from '../Filter/Filter';
 import './Map.css';
 
+// ask gabby about clearing out old location
+// ---
+// clean up unused stuff
+// make components on app page
+// Bug fixes
+// test location permission
+
 const TOKEN = 'pk.eyJ1IjoiZ2FiYnlnYWJieSIsImEiOiJjazZsYzgwaDEwMmFhM2hwaG1nMWZvcnpzIn0.Fw8Z5U4PoaEIQACGzQ2mYA';
 
 class Map extends Component {
@@ -73,7 +80,7 @@ class Map extends Component {
         <div
           ref={(el) => this.mapContainer = el}
           id="map"
-          style={{ position: 'absolute', top: 0, right: 0, left: 0, bottom: 380 }}
+          style={{ position: 'relative', height: 400 }}
         />
         <p id="coordinates" className="coordinates"></p>
       </div>

@@ -5,12 +5,17 @@ import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by';
 import { MAP_API_KEY } from '../../utils/apiKeys';
 import { getAll } from '../../utils/FoursquareAPI';
-import Top from '../Top/Top';
 import Filter from '../Filter/Filter';
 import Map from '../Map/Map';
 import Footer from '../Footer/Footer';
 import Error from '../Error/Error';
 import Modal from '../Common/Modal';
+import Pin from '../../assets/imgs/pin_def.svg';
+import RedCross from '../../assets/imgs/pin_def.svg';
+import Police from '../../assets/imgs/police-car.png';
+import Top from '../Top/Top';
+import DetailModal from '../Details/DetailModal';
+import '../Details/Details.css';
 import { agreeToTerms, setInitialCoords } from '../../actions';
 import './App.css';
 
@@ -19,6 +24,8 @@ const TOKEN = 'pk.eyJ1IjoiZ2FiYnlnYWJieSIsImEiOiJjazZsYzgwaDEwMmFhM2hwaG1nMWZvcn
 class App extends Component {
   constructor(props) {
     super(props);
+    const { terms } = this.props;
+
     this.state = {
       modal: true,
       map: true,
@@ -32,11 +39,35 @@ class App extends Component {
       long: 0,
       lat: 0,
       address: '',
-      error: ''
+      error: '',
+      emergency: false,
+      location: false,
+      icon: '',
+      emergencyDetail: '',
+      locationDetail: '',
+      more: '',
+      status: '',
+      modal: false,
+      terms,
+      specific: false,
+      btn: ''
     };
   }
 
   componentDidMount() {
+      // Permission API is implemented
+    navigator.permissions.query({
+      name: 'geolocation'
+    }).then((permission) => {
+      if (permission.state === 'denied') {
+        this.setState({ emergency: true })
+      } if (permission.state === 'granted') {
+        this.setState({ emergency: false })
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+
     console.log('mount')
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position)
@@ -56,6 +87,7 @@ class App extends Component {
   }
 
   type(medical, police, fire) {
+    console.log(medical, police, fire)
     if (medical && police && fire) return 'Medical, police and fire';
     if (police && fire && !medical) return 'Police and fire';
     if (medical && fire && !police) return 'Medical and fire';
@@ -65,11 +97,13 @@ class App extends Component {
     if (police && !fire && !medical) return 'Police';
   }
 
-  onSuccess(medical, police, fire) {
-    const { long, lat, address } = this.state;
-    this.setState({body: `${this.type(medical, police, fire)} emergency at ${long}, ${lat} or ${address}. Person may be deaf or unable to speak out loud.` })
-    console.log(this.state.body)
-    // this.setState({ success: true });
+  onSuccess() {
+    const { medical, police, fire, long, lat, address, emergencyDetail, locationDetail, more } = this.state;
+    const newEmergency = emergencyDetail !== '' ? `, ${emergencyDetail} ` : ' ';
+    const newLocation = locationDetail !== '' ? `, ${locationDetail}: ${more} ` : ' ';
+    const body = `${this.type(medical, police, fire)}${newEmergency}emergency, located at ${long}, ${lat} or ${address}${newLocation}. Person may be deaf or unable to speak out loud.`;
+    console.log(body)
+    this.setState({ success: true });
       return fetch('/.netlify/functions/text-created', {
         method: 'POST',
         mode: 'cors',
@@ -78,7 +112,7 @@ class App extends Component {
         },
         body: JSON.stringify(
           {
-            body: this.state.body
+            body: body
           },
         ),
 
@@ -87,7 +121,7 @@ class App extends Component {
         console.log(response)
         if (response.status === 200) {
           console.log('success');
-          this.setState({ success: true });
+          this.setState({ modal: true, status: 'success' });
         } else {
           console.log('else')
           this.setState({ modal: true, status: 'error' });
@@ -98,8 +132,8 @@ class App extends Component {
   }
 
   maybeModal() {
-    const { emergency, modal, status } = this.state;
-    const { terms } = this.props;
+    const { emergency, modal, status, terms } = this.state;
+    console.log(emergency, modal, status, terms)
     if (!terms) {
       return (
         <Modal
@@ -107,7 +141,7 @@ class App extends Component {
           para="You agree to our terms of use and allow us to access your location."
           btnTxt="Agree"
           btnClick={() => {
-            this.setState({ modal: false });
+            this.setState({ terms: false });
             this.props.agreeToTerms()
           }}
         />
@@ -115,12 +149,23 @@ class App extends Component {
     } if (emergency) {
       return (
         <Modal
-          header="WHERE'S YOUR EMERGENCY?"
+          header="ENABLE LOCATION PERMISSION"
           para="For this app to work, we need your location, please enable GPS."
           btnTxt="Agree"
           btnClick={() => this.setState({ emergency: false })}
         />
       );
+    } if (modal && status === 'success') {
+      return (
+        <Modal
+          header="Your message was sent"
+          para=""
+          btnTxt="Ok"
+          btnClick={() => {
+            this.setState({ modal: false, status: '' });
+          }}
+        />
+      )
     } if (modal && status === 'error') {
       return (
         <Modal
@@ -139,47 +184,152 @@ class App extends Component {
     return null;
   }
 
-  maybeFilter() {
-    const { long, lat, address } = this.state;
-    return (
-      <div>
-        <Map
-          long={long}
-          lat={lat}
-          address={address}
-          setCoords={(long, lat, address) => {
-            console.log('coords', long, lat, address)
-            this.setState({ long, lat, address });
-          }}
-        />
-        <Filter
-          data={this.state}
-          onToggleOpen={this.onToggleOpen}
-          filterPlaces={this.filterPlaces}
-          onSuccess={(medical, police, fire) => {
-            console.log(medical, police, fire)
-            this.onSuccess(medical, police, fire);
-          }}
-        />
-      </div>
-    );
-  }
-
   render() {
-    const { modal, emergency, filter, success } = this.state;
+    const {
+      modal,
+      filter,
+      success,
+      emergencyDetail,
+      locationDetail,
+      more,
+      icon,
+      location,
+      emergency,
+      long,
+      lat,
+      address,
+      medical,
+      police,
+      fire,
+      detail,
+      specific
+      // modal
+    } = this.state;
     const { terms } = this.props;
-    if (success) return <Redirect push to="/details" />;
+    // if (success) return <Redirect push to="/details" />;
     return (
       <div className="app">
         {
-          !terms || emergency ?
+          !terms || emergency || modal ?
           <div className="modal-container" /> :
           null
         }
-        <div className="content">
-          {this.maybeModal()}
+        <div>
+          <Map
+            long={long}
+            lat={lat}
+            address={address}
+            setCoords={(long, lat, address) => {
+              console.log('coords', long, lat, address)
+              this.setState({ long, lat, address });
+            }}
+          />
+          <Filter
+            data={this.state}
+            onToggleOpen={this.onToggleOpen}
+            filterPlaces={this.filterPlaces}
+            medical={medical}
+            fire={fire}
+            police={police}
+            setMedical={() => this.setState({ medical: !medical })}
+            setPolice={() => this.setState({ police: !police })}
+            setFire={() => this.setState({ fire: !fire })}
+          />
+          <div className="more-info-container">
+            <div className="more-info-wrapper">
+              <h3 className="more-info-text">
+                Send More Information (Optional)
+              </h3>
+            </div>
+            {this.maybeModal()}
+            <button
+              onClick={() => this.setState({ specific: true })}
+              className="emergency-container"
+            >
+              <img
+                src={Police}
+                alt="police car"
+                className="icon"
+                title="Police Car Icon"
+              />
+              <p className="emergency-text">
+                Specific Emergency?
+              </p>
+            </button>
+            <button
+              onClick={() => this.setState({ location: true })}
+              className="location-container"
+            >
+              <img
+                src={RedCross}
+                alt="red cross"
+                className="icon"
+                title="Red Cross Icon"
+              />
+              <p className="emergency-text">
+                Specific Location?
+              </p>
+            </button>
+          </div>
+          <DetailModal
+            show={specific}
+            buttons={[
+              'Unconscious',
+              'Domestic Violence',
+              'Crisis Intervention',
+              'Bleeding',
+              'Car Accident',
+              'Home Invasion/Theft',
+              'Shooting',
+              'Trouble Breathing'
+            ]}
+            title="Specific Emergency?"
+            setIcon={(b) => {
+              this.setState({ icon: icon === b ? '' : b });
+              this.setState({ emergencyDetail: b });
+              console.log('BBBB', b)
+            }}
+            iconChecked={icon}
+            dismiss={() => this.setState({ specific: false })}
+          />
+          <DetailModal
+            show={location}
+            setIcon={(b) => {
+              this.setState({ icon: icon === b ? '' : b });
+              this.setState({ locationDetail: b });
+              console.log('BBBB', b)
+            }}
+            iconChecked={icon}
+            location
+            buttons={[
+              'Room Number',
+              'Floor',
+              'Bus/Train',
+              'Highway'
+            ]}
+            title="Specific Location?"
+            setDetail={(d) => this.setState({ more: d })}
+            dismiss={() => this.setState({ location: false })}
+          />
+          <div className="send-btn-container">
+            <button
+              onClick={() => this.onSuccess(medical, police, fire)}
+              tabIndex="1"
+              className="result-item"
+              style={{
+                backgroundColor: 'blue',
+                width: 300,
+                borderRadius: 25/2,
+                marginTop: 10
+              }}
+            >
+              <p className="btn-container">
+                Send Message
+              </p>
+            </button>
+          </div>
+
         </div>
-        {this.maybeFilter()}
       </div>
     );
   }

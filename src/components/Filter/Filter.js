@@ -8,25 +8,15 @@ import Fire from '../../assets/imgs/fire.png';
 import SwipeableButton from '../Common/SwipeableButton';
 
 const Filter = (props) => {
-  const [medical, setMedical] = useState(false);
-  const [police, setPolice] = useState(false);
-  const [fire, setFire] = useState(false);
   return (
     <div className="filter">
-      <h2 className="filter-title" tabIndex="0">
-        Emergency Help Needed?
-      </h2>
       <div className="results">
+        <h3 style={{ textAlign: 'center' }}>What kind of emergency?</h3>
         <ul className="results-list" tabIndex="0">
           <button
-            onClick={() => {
-              setMedical(true);
-              // setPolice(false);
-              // setFire(false);
-            }}
+            onClick={() => props.setMedical()}
             tabIndex="0"
             className="result-item"
-            // style={{ backgroundColor: medical === true ? 'red': '#cfd8dc' }}
           >
             <img
               src={RedCross}
@@ -38,17 +28,13 @@ const Filter = (props) => {
             <input
               type="checkbox"
               className="form-check-input"
+              checked={props.medical}
             />
           </button>
           <button
-            onClick={() => {
-              // setMedical(false);
-              setPolice(true);
-              // setFire(false);
-            }}
+            onClick={() => props.setPolice()}
             tabIndex="1"
             className="result-item"
-            // style={{ backgroundColor: police === true ? 'red': '#cfd8dc' }}
           >
             <img
               src={PoliceCar}
@@ -60,17 +46,13 @@ const Filter = (props) => {
               <input
                 type="checkbox"
                 className="form-check-input"
+                checked={props.police}
               />
           </button>
           <button
-            onClick={() => {
-              // setMedical(false);
-              // setPolice(false);
-              setFire(true);
-            }}
+            onClick={() => props.setFire()}
             tabIndex="2"
             className="result-item"
-            // style={{ backgroundColor: fire === true ? 'red': '#cfd8dc' }}
           >
             <img
               src={Fire}
@@ -82,11 +64,11 @@ const Filter = (props) => {
             <input
               type="checkbox"
               className="form-check-input"
+              checked={props.fire}
             />
           </button>
         </ul>
       </div>
-      <SwipeableButton onSuccess={() => props.onSuccess(medical, police, fire)} color='red' text='Slide to Contact 911' />
     </div>
   );
 };
