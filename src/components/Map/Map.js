@@ -13,6 +13,14 @@ import './Map.css';
 
 const TOKEN = 'pk.eyJ1IjoiZ2FiYnlnYWJieSIsImEiOiJjazZsYzgwaDEwMmFhM2hwaG1nMWZvcnpzIn0.Fw8Z5U4PoaEIQACGzQ2mYA';
 
+// ask gabby about clearing out old location
+// deploy Text to Voice
+// Add prompt install PWA
+// Combine first page and details page
+// Bug fixes
+// Twilio lookup endpoint
+// Prevent app usage without phone number or location
+
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +28,8 @@ class Map extends Component {
     this.state = {
       long,
       lat,
-      address
+      address,
+      pin: true
     };
   }
 
@@ -71,12 +80,31 @@ class Map extends Component {
       this.dragend(marker.getLngLat().lng, marker.getLngLat().lat);
     });
   }
+  pin() {
+    const { pin } = this.state;
+    if (pin) {
+      return (
+        <div className="pin">
+          <button
+            style={{
+              backgroundColor: 'transparent',
+              borderWidth: 0
+            }}
+            onClick={() => this.setState({ pin: false })}
+          >
+            <h1>Click here to drag the pin to your location</h1>
+          </button>
+        </div>
+      )
+    } return null;
+  }
   render() {
     return (
       <div style={{
         justifyContent: 'center',
         alignContent: 'center'
       }}>
+        {this.pin()}
         <div
           ref={(el) => this.mapContainer = el}
           id="map"

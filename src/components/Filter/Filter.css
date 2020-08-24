@@ -4,8 +4,14 @@
   right: 0; */
   /* z-index: 9999999; */
   /* width: 100%; */
-  /* padding: 3em 2em; */
-
+  /* padding: 3em 2em;
+  /* position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 9999999;
+  width: 100%;
+  padding: 1em 1em;
+  background-color: #fff */
 }
 
 .filter-title {

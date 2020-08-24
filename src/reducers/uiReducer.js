@@ -19,6 +19,13 @@ export default (state = INITIAL_STATE, action) => {
         lat: action.lat,
         address: action.address
       };
+    case 'clear_coords':
+      return {
+        ...state,
+        long: 0,
+        lat: 0,
+        address: ''
+      }
     default:
       return state;
   }
