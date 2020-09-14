@@ -317,7 +317,7 @@ class App extends Component {
               tabIndex="1"
               className="result-item"
               style={{
-                backgroundColor: 'blue',
+                backgroundColor: 'red',
                 width: 300,
                 borderRadius: 25/2,
                 marginTop: 10
