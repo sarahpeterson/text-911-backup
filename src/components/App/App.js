@@ -141,7 +141,7 @@ class App extends Component {
           para="You agree to our terms of use and allow us to access your location."
           btnTxt="Agree"
           btnClick={() => {
-            this.setState({ terms: false });
+            this.setState({ terms: true });
             this.props.agreeToTerms()
           }}
         />
