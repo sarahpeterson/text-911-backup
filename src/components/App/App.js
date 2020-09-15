@@ -56,17 +56,17 @@ class App extends Component {
 
   componentDidMount() {
       // Permission API is implemented
-    navigator.permissions.query({
-      name: 'geolocation'
-    }).then((permission) => {
-      if (permission.state === 'denied') {
-        this.setState({ emergency: true })
-      } if (permission.state === 'granted') {
-        this.setState({ emergency: false })
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
+    // navigator.permissions.query({
+    //   name: 'geolocation'
+    // }).then((permission) => {
+    //   if (permission.state === 'denied') {
+    //     this.setState({ emergency: true })
+    //   } if (permission.state === 'granted') {
+    //     this.setState({ emergency: false })
+    //   }
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
 
     console.log('mount')
     navigator.geolocation.getCurrentPosition((position) => {
@@ -146,16 +146,18 @@ class App extends Component {
           }}
         />
       );
-    } if (emergency) {
-      return (
-        <Modal
-          header="ENABLE LOCATION PERMISSION"
-          para="For this app to work, we need your location, please enable GPS."
-          btnTxt="Agree"
-          btnClick={() => this.setState({ emergency: false })}
-        />
-      );
-    } if (modal && status === 'success') {
+    }
+    // if (emergency) {
+    //   return (
+    //     <Modal
+    //       header="ENABLE LOCATION PERMISSION"
+    //       para="For this app to work, we need your location, please enable GPS."
+    //       btnTxt="Agree"
+    //       btnClick={() => this.setState({ emergency: false })}
+    //     />
+    //   );
+    // }
+    if (modal && status === 'success') {
       return (
         <Modal
           header="Your message was sent"
