@@ -50,7 +50,8 @@ class App extends Component {
       modal: false,
       terms,
       specific: false,
-      btn: ''
+      btn: '',
+      body: ''
     };
   }
 
@@ -103,36 +104,38 @@ class App extends Component {
     const newLocation = locationDetail !== '' ? `, ${locationDetail}: ${more} ` : ' ';
     const body = `${this.type(medical, police, fire)}${newEmergency}emergency, located at ${long}, ${lat} or ${address}${newLocation}. Person may be deaf or unable to speak out loud.`;
     console.log(body)
-    this.setState({ success: true });
-      return fetch('/.netlify/functions/text-created', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(
-          {
-            body: body
-          },
-        ),
-
-      })
-      .then((response) => {
-        console.log(response)
-        if (response.status === 200) {
-          console.log('success');
-          this.setState({ modal: true, status: 'success' });
-        } else {
-          console.log('else')
-          this.setState({ modal: true, status: 'error' });
-        }
-      }).catch((error) => {
-        console.log(error)
-      })
+    this.setState({ body });
+    this.setState({ modal: true, status: 'success' });
+    // this.setState({ success: true });
+    //   return fetch('/.netlify/functions/text-created', {
+    //     method: 'POST',
+    //     mode: 'cors',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(
+    //       {
+    //         body: body
+    //       },
+    //     ),
+    //
+    //   })
+    //   .then((response) => {
+    //     console.log(response)
+    //     if (response.status === 200) {
+    //       console.log('success');
+    //       this.setState({ modal: true, status: 'success' });
+    //     } else {
+    //       console.log('else')
+    //       this.setState({ modal: true, status: 'error' });
+    //     }
+    //   }).catch((error) => {
+    //     console.log(error)
+    //   })
   }
 
   maybeModal() {
-    const { emergency, modal, status, terms } = this.state;
+    const { emergency, modal, status, terms, body } = this.state;
     console.log(emergency, modal, status, terms)
     if (!terms) {
       return (
@@ -161,7 +164,7 @@ class App extends Component {
       return (
         <Modal
           header="Your message was sent"
-          para=""
+          para={`This is the message that would be sent using Twilio voice and/or text endpoints:  ${body}`}
           btnTxt="Ok"
           btnClick={() => {
             this.setState({ modal: false, status: '' });
