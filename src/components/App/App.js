@@ -243,7 +243,7 @@ class App extends Component {
           <div className="more-info-container">
             <div className="more-info-wrapper">
               <h3 className="more-info-text">
-                Send More Information (Optional)
+                Send More Information (*Optional)
               </h3>
             </div>
             {this.maybeModal()}
